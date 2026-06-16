@@ -59,9 +59,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: List release artifacts
-        run: ls -la release/ || echo "release/ does not exist"
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
