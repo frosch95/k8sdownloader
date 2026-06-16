@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme variables ─────────────────────────────────────────────────── */
+
+:root {
+  --k8s-bg: #f8fafc;
+  --k8s-bg-secondary: #ffffff;
+  --k8s-surface: #f1f5f9;
+  --k8s-border: #e2e8f0;
+  --k8s-text: #1e293b;
+  --k8s-muted: #64748b;
+}
+
+.dark {
+  --k8s-bg: #0f172a;
+  --k8s-bg-secondary: #1e293b;
+  --k8s-surface: #1a2332;
+  --k8s-border: #2d3a4a;
+  --k8s-text: #e2e8f0;
+  --k8s-muted: #94a3b8;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--k8s-bg);
+  color: var(--k8s-text);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--k8s-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--k8s-muted);
+}
+
+/* Selection */
+::selection {
+  background: rgba(50, 108, 229, 0.3);
+  color: #fff;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid rgba(50, 108, 229, 0.6);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+select,
+button,
+input {
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    opacity 0.15s ease;
+}
