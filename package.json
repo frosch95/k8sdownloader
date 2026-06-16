@@ -2,6 +2,7 @@
   "name": "k8sdownloader",
   "version": "1.0.0",
   "description": "Desktop app to browse and download files from Kubernetes pods",
+  "author": "Andreas Billmann <abi@love2co.de>",
   "private": true,
   "packageManager": "pnpm@11.7.0",
   "main": "dist-electron/main.js",
@@ -65,7 +66,8 @@
     },
     "linux": {
       "target": ["AppImage", "deb"],
-      "icon": "public/icon.png"
+      "icon": "public/icon.png",
+      "maintainer": "abi@love2co.de"
     }
   }
 }
