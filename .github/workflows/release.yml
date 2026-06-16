@@ -25,13 +25,13 @@ jobs:
         include:
           - os: windows-latest
             target: win
-            artifact: "*.exe"
+            artifact: "release/*.exe"
           - os: macos-latest
             target: mac
-            artifact: "*.dmg"
+            artifact: "release/*.dmg"
           - os: ubuntu-latest
             target: linux
-            artifact: "*.AppImage *.deb"
+            artifact: "release/*.AppImage release/*.deb"
 
     runs-on: ${{ matrix.os }}
 
@@ -66,7 +66,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: k8sdownloader-${{ matrix.target }}
-          path: release/${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
           if-no-files-found: error
 
   release:
