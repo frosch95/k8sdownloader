@@ -165,9 +165,10 @@ export function listFiles(
 
   // Fallback: Windows dir command
   log("listFiles: ls failed, trying Windows dir…");
+  const windowsDirPath = normalizeWindowsContainerPath(dirPath);
   const dirArgs = buildExecArgs(
     contextName, namespace, podName, containerName,
-    ["cmd", "/c", "dir", dirPath]
+    ["cmd", "/c", "dir", windowsDirPath]
   );
 
   const dirResult = runKubectlRaw(dirArgs);
@@ -219,7 +220,8 @@ export function downloadFile(
 
   // Fallback: Windows cmd /c type
   log("downloadFile: cat failed, trying Windows type…");
-  const typeResult = spawnSync("kubectl", [...baseArgs, "cmd", "/c", "type", sourcePath], {
+  const windowsSourcePath = normalizeWindowsContainerPath(sourcePath);
+  const typeResult = spawnSync("kubectl", [...baseArgs, "cmd", "/c", "type", windowsSourcePath], {
     encoding: "buffer",
     timeout: 60000,
     maxBuffer: 200 * 1024 * 1024,
@@ -280,6 +282,25 @@ function buildExecArgs(
   }
   args.push("--", ...command);
   return args;
+}
+
+function normalizeWindowsContainerPath(inputPath: string): string {
+  const trimmed = inputPath.trim();
+  if (!trimmed || trimmed === "/") {
+    return "\\";
+  }
+
+  // Keep explicit drive-letter paths as-is except slash normalization.
+  if (/^[a-zA-Z]:[\\/]/.test(trimmed)) {
+    return trimmed.replace(/\//g, "\\");
+  }
+
+  // For Unix-style absolute paths (e.g. /app/log), map to Windows root-relative paths.
+  if (trimmed.startsWith("/")) {
+    return trimmed.replace(/\//g, "\\");
+  }
+
+  return trimmed.replace(/\//g, "\\");
 }
 
 function runKubectlRaw(args: string[]): ReturnType<typeof spawnSync> {
