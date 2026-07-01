@@ -16,6 +16,7 @@ import { AppError, ErrorCode } from "./shared/types/errors";
 import type { PodInfo } from "./shared/types/kubernetes";
 
 import { UI } from "./shared/constants";
+import k8sIcon from "/icon.svg";
 
 const { SIDEBAR_MIN, SIDEBAR_MAX, SIDEBAR_DEFAULT } = UI;
 
@@ -118,7 +119,7 @@ function App() {
       {/* Header */}
       <header className="shrink-0 flex items-center justify-between px-6 py-3 bg-k8s-dark border-b border-k8s-border">
         <div className="flex items-center gap-3">
-          <img src="/icon.svg" alt="Kubernetes" className="w-12 h-12" />
+          <img src={k8sIcon} alt="Kubernetes" className="w-12 h-12" />
           <h1 className="text-lg font-bold text-k8s-text tracking-tight">
             k8s Downloader
           </h1>
