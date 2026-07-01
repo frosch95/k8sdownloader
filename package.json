@@ -21,7 +21,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@kubernetes/client-node": "^0.22.0",
+    "@kubernetes/client-node": "^1.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-window": "^2.2.7",
