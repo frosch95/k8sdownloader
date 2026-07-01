@@ -1,4 +1,6 @@
-# ☸️ K8sDownloader
+<img src="public/icon.svg" width="160" alt="Icon">
+
+# k8s Downloader
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.2.3-blue.svg)](https://github.com/frosch95/k8sdownloader/releases)
@@ -10,14 +12,23 @@
 ## Features
 
 ✅ **Kubernetes Context Management** - View and switch between multiple kubeconfig contexts
+
 ✅ **Namespace Browsing** - Explore all namespaces in your cluster
+
 ✅ **Pod Selection** - View pods and their status with color-coded badges
+
 ✅ **File System Navigation** - Browse pod file systems with breadcrumb navigation
+
 ✅ **File Download** - Download individual files from pods
+
 ✅ **Dark/Light Mode** - Toggle between themes with localStorage persistence
+
 ✅ **Responsive Design** - Works on different screen sizes
+
 ✅ **Cross-Platform** - Supports Linux and Windows pods
+
 ✅ **Error Handling** - Comprehensive error boundaries and user-friendly messages
+
 ✅ **Performance Optimized** - Memoized components and debounced inputs
 
 ## Features
