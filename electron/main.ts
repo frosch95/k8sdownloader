@@ -7,9 +7,14 @@ import {
   listFiles,
   downloadFile,
 } from "./kubernetes";
+import { initLogger, patchConsole, closeLogger } from "./logger";
 
 const isDev = !app.isPackaged;
 let mainWindow: BrowserWindow | null = null;
+
+// Initialise the logger – truncates output.log and patches console.log/error
+initLogger();
+patchConsole();
 
 // Use a dedicated cache directory inside the project during development
 // to avoid permission conflicts with system-level Chromium caches.
@@ -141,4 +146,8 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+app.on("before-quit", () => {
+  closeLogger();
 });

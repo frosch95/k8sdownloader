@@ -5,6 +5,7 @@
 ## In Progress
 
 ## Done
+* [x] **Improvement:** Write the log output on every start into an empty file output.log.
 * [x] **BugFix:** Update GitHub Actions to use latest versions to avoid Node.js 20 deprecation warnings
 * [x] **Improvements:** replace ☸️ with icon.svg
 * [x] **Improvement:** Add MIT license to the project
