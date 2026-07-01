@@ -11,11 +11,6 @@ import {
 const isDev = !app.isPackaged;
 let mainWindow: BrowserWindow | null = null;
 
-// Fix Windows GPU cache "Zugriff verweigert" errors by disabling the disk cache.
-// These errors are harmless but noisy; this silences them.
-app.commandLine.appendSwitch("disable-gpu");
-app.commandLine.appendSwitch("disable-software-rasterizer");
-
 // Use a dedicated cache directory inside the project during development
 // to avoid permission conflicts with system-level Chromium caches.
 if (isDev) {

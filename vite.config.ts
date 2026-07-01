@@ -1,4 +1,5 @@
-import { defineConfig } from "vite";
+/// <reference types="vitest" />
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import electron from "vite-plugin-electron";
 import path from "path";
@@ -23,8 +24,7 @@ export default defineConfig({
           build: {
             outDir: "dist-electron",
             rollupOptions: {
-              // Don't externalize electron for now
-              // external: ["electron"],
+              external: ["electron"]
             },
             minify: false,
             sourcemap: true,
@@ -40,8 +40,7 @@ export default defineConfig({
           build: {
             outDir: "dist-electron",
             rollupOptions: {
-              // Don't externalize electron for now
-              // external: ["electron"],
+              external: ["electron"]
             },
             minify: false,
             sourcemap: true,
@@ -69,7 +68,7 @@ export default defineConfig({
             // For development with Electron, use a more permissive CSP
             return html.replace(
               /<meta http-equiv="Content-Security-Policy" content=".*?" \/>/,
-              '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; connect-src \'self\' http://localhost:5173 ws://localhost:5173;">'
+              '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com; connect-src \'self\' http://localhost:5173 ws://localhost:5173; worker-src \'self\' blob:;">'
             );
           } else {
             // For production, keep a reasonable CSP
@@ -102,10 +101,16 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ["react", "react-dom"],
-          zustand: ["zustand"],
-          kubernetes: ["@kubernetes/client-node"],
+        manualChunks(id: string) {
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+            return "react";
+          }
+          if (id.includes("node_modules/zustand")) {
+            return "zustand";
+          }
+          if (id.includes("node_modules/@kubernetes/client-node")) {
+            return "kubernetes";
+          }
         },
       },
     },

@@ -47,6 +47,19 @@ declare global {
 export class KubernetesService {
   
   /**
+   * Returns the electronAPI, throwing if not available (e.g. running in browser).
+   */
+  private static get api() {
+    if (!window.electronAPI) {
+      throw new AppError(
+        ErrorCode.UNKNOWN_ERROR,
+        "Electron API not available. Please run this app inside Electron, not a browser."
+      );
+    }
+    return window.electronAPI;
+  }
+  
+  /**
    * Fetches all available Kubernetes contexts from the user's kubeconfig
    * 
    * @returns {Promise<ContextInfo[]>} Array of context information
@@ -54,7 +67,7 @@ export class KubernetesService {
    */
   static async getContexts(): Promise<ContextInfo[]> {
     try {
-      return await window.electronAPI.getContexts();
+      return await this.api.getContexts();
     } catch (error) {
       throw AppError.fromError(error);
     }
@@ -72,7 +85,7 @@ export class KubernetesService {
       if (!contextName) {
         throw new AppError(ErrorCode.CONTEXT_NOT_FOUND, 'Context name is required');
       }
-      return await window.electronAPI.getNamespaces(contextName);
+      return await this.api.getNamespaces(contextName);
     } catch (error) {
       throw AppError.fromError(error);
     }
@@ -97,7 +110,7 @@ export class KubernetesService {
       if (!namespace) {
         throw new AppError(ErrorCode.NAMESPACE_NOT_FOUND, 'Namespace is required');
       }
-      return await window.electronAPI.getPods(contextName, namespace);
+      return await this.api.getPods(contextName, namespace);
     } catch (error) {
       throw AppError.fromError(error);
     }
@@ -131,7 +144,7 @@ export class KubernetesService {
       if (!podName) {
         throw new AppError(ErrorCode.POD_NOT_FOUND, 'Pod name is required');
       }
-      return await window.electronAPI.listFiles(
+      return await this.api.listFiles(
         contextName,
         namespace,
         podName,
@@ -177,13 +190,13 @@ export class KubernetesService {
         throw new AppError(ErrorCode.FILE_NOT_FOUND, 'Source path is required');
       }
 
-      const destPath = await window.electronAPI.showSaveDialog(defaultFileName);
+      const destPath = await this.api.showSaveDialog(defaultFileName);
       if (!destPath) {
         // User cancelled the save dialog
         return;
       }
 
-      await window.electronAPI.downloadFile(
+      await this.api.downloadFile(
         contextName,
         namespace,
         podName,

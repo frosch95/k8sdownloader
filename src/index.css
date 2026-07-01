@@ -1,6 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ── Tailwind v4 Theme ───────────────────────────────────────────────── */
+
+@theme {
+  --color-k8s-blue: #326ce5;
+  --color-k8s-darker: var(--k8s-bg);
+  --color-k8s-dark: var(--k8s-bg-secondary);
+  --color-k8s-surface: var(--k8s-surface);
+  --color-k8s-border: var(--k8s-border);
+  --color-k8s-text: var(--k8s-text);
+  --color-k8s-muted: var(--k8s-muted);
+  --color-k8s-link: var(--k8s-link);
+  --color-k8s-link-hover: var(--k8s-link-hover);
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* ── Dark mode variant ───────────────────────────────────────────────── */
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ── Theme variables ─────────────────────────────────────────────────── */
 
@@ -37,15 +54,9 @@
   --k8s-link-hover: #cccccc;
 }
 
-/* ── Reset ───────────────────────────────────────────────────────────── */
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ── Base styles ─────────────────────────────────────────────────────── */
+/* Tailwind v4 Preflight already handles *, ::before, ::after reset.
+   Only add styles that Preflight does NOT cover. */
 
 html,
 body,
